@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Patient {
+  id          String    @id @default(uuid())
+  name        String?
+  phone       String?
+  email       String?   @unique
+  birthDate   DateTime?
+  gender      String?
+  height      Float?    
+  weight      Float?    
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  isAnonymized Boolean  @default(false)
+  appointments Appointment[]
+
+  @@map("patients")
+}
+
+model Appointment {
+  id          String   @id @default(uuid())
+  date        DateTime
+  notes       String?    
+  patientId   String
+  patient     Patient  @relation(fields: [patientId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("appointments")
+}
+
+model User {
+  id                 String   @id @default(uuid())
+  email              String   @unique
+  passwordHash       String
+  currentSessionId   String?  // identifies the active session (for single session)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@map("users")
+}
