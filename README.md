@@ -13,11 +13,13 @@ Este projeto foi desenvolvido seguindo **SOLID Principles** e **Clean Architectu
 - **Banco de Dados**: PostgreSQL
 - **ORM**: Prisma IO
 - **Validação**: Zod
-- **Autenticação**: JWT (JSON Web Tempks) com rotação de sessão
+- **Autenticação**: JWT (JSON Web Tokens) com rotação de sessão
 - **Documentação**: Swagger UI (OpenAPI 3.0)
 - **Qualidade de Código**: ESLint, Husky (pre-commit hooks), Lint-staged
 - **Testes**: Jest (Unitários e Integração)
-- **Containerização**: Docker Compose
+- **Containerização**: Docker
+- **CI/CD**: GitHub Actions
+- **Deploy**: Render (Docker + PostgreSQL)
 
 ---
 
@@ -32,7 +34,7 @@ O projeto foi refatorado para seguir boas práticas de engenharia de software:
 
 ---
 
-## ⚡ Setup e Execução
+## ⚡ Setup e Execução Local
 
 ### Pré-requisitos
 
@@ -67,6 +69,22 @@ Utilize o script de setup que configura o ambiente, instala dependências, roda 
    ```
 
 O servidor estará rodando em `http://localhost:3000`.
+
+---
+
+## 🌐 Deploy no Render
+
+Este projeto já vem configurado com um Arquivo Blueprint (`render.yaml`) para facilitar o deploy no Render.
+
+1. Crie uma conta no [Render.com](https://render.com/).
+2. No Dashboard, clique em **"New +"** e selecione **"Blueprint"**.
+3. Conecte seu repositório GitHub.
+4. O Render detectará automaticamente o arquivo `render.yaml` e criará:
+   - Um **PostgreSQL** (versão Free).
+   - Um **Web Service** (via Docker).
+5. Clique em **Apply** e aguarde o build.
+
+*Nota: O script de start (`npm start`) já está configurado para rodar as migrations do banco de dados automaticamente antes de iniciar a API.*
 
 ---
 
